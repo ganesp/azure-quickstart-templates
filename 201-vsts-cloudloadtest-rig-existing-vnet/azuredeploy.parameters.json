@@ -1,7 +1,7 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
 		"vstsAccountName": {
 			"value": "GEN-UNIQUE"
 		},
@@ -12,19 +12,19 @@
 			"value": "GEN-PASSWORD"
 		},
 		"agentCount": {
-			"value":1
+			"value": 1
 		},
 		"adminUsername": {
-			"value":"cltuser"
+			"value": "GEN-UNIQUE"
 		},
 		"existingVNetResourceGroupName": {
-            "value":"GEN-UNIQUE"
-        },
-        "existingVNetName": {
-            "value":"GEN-UNIQUE"
-        },
-        "subnetName": {
-            "value":"GEN-UNIQUE"
-        }
-    }
+			"value": "GEN-VNET-RESOURCEGROUP-NAME"
+		},
+		"existingVNetName": {
+			"value": "GEN-VNET-NAME"
+		},
+		"subnetName": {
+			"value": "GEN-VNET-SUBNET1-NAME"
+		}
+	}
 }
