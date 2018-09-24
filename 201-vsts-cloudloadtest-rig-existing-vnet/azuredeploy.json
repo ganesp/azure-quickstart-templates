@@ -5,13 +5,13 @@
     "vstsAccountName": {
       "type": "String",
       "metadata": {
-        "description": "Please enter the VSTS account name. If you access your VSTS account using 'https://yourAccountName.visualstudio.com', enter yourAccountName."
+        "description": "Please enter the Azure DevOps Services account name. If you access your Azure DevOps Services account using 'https://dev.azure.com/yourAccountName' or 'https://yourAccountName.visualstudio.com', enter yourAccountName."
       }
     },
     "vstsPersonalAccessToken": {
       "type": "SecureString",
       "metadata": {
-        "description": "Personal Access Token (PAT) for the VSTS account. You should select the  scope as 'Load test (read and write)'. Please refer 'https://www.visualstudio.com/en-us/get-started/setup/use-personal-access-tokens-to-authenticate' for more details."
+        "description": "Personal Access Token (PAT) for the Azure DevOps Services account. You should select the  scope as 'Load test (read and write)'. Please refer 'https://www.visualstudio.com/en-us/get-started/setup/use-personal-access-tokens-to-authenticate' for more details."
       }
     },
     "agentCount": {
@@ -87,7 +87,7 @@
     "dataDisk1VhdName": "datadisk",
     "windowsOSVersion": "2012-R2-Datacenter",
     "OSDiskName": "osdisk",
-    "subnetRef": "[resourceId(parameters('existingVNetResourceGroupName'), 'Microsoft.Network/virtualNetworks/subnets', parameters('existingVNetName'),  parameters('subnetName'))]",
+    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('existingVNetName'),  parameters('subnetName'))]",
     "agentGroupName": "[resourceGroup().name]"
   },
   "resources": [
@@ -145,7 +145,7 @@
     {
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(variables('vmName'), 'i',copyIndex())]",
-      "apiVersion": "2017-03-30",
+      "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "copy": {
         "name": "vmCopy",
@@ -168,15 +168,21 @@
             "version": "latest"
           },
           "osDisk": {
-            "name": "[concat(variables('vmName'), 'i',copyIndex(),'_OSDisk')]",
+            "name": "osdisk",
+            "vhd": {
+              "uri": "[concat('http://',variables('storageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/',concat(variables('vmName'), copyIndex(), variables('OSDiskName')),'.vhd')]"
+            },
             "caching": "ReadWrite",
             "createOption": "FromImage"
           },
           "dataDisks": [
             {
-              "name": "[concat(variables('vmName'), 'i',copyIndex(),'_DataDisk1')]", 
+              "name": "datadisk",
               "diskSizeGB": "[variables('sizeOfDiskInGB')]",
               "lun": 0,
+              "vhd": {
+                "uri": "[concat('http://',variables('storageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/', concat(variables('vmName'), copyIndex(), variables('dataDisk1VhdName')),'.vhd')]"
+              },
               "createOption": "Empty"
             }
           ]
