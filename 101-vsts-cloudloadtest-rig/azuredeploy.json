@@ -62,7 +62,7 @@
   "variables": {
     "sizeOfDiskInGB": "100",
     "imagePublisher": "MicrosoftWindowsServer",
-4    "imageOffer": "WindowsServer",
+    "imageOffer": "WindowsServer",
     "addressPrefix": "10.0.0.0/16",
     "sequenceVersion": "[uniqueString(resourceGroup().id)]",
     "uniqueStringValue": "[substring(variables('sequenceVersion'), 3, 7)]",

@@ -87,7 +87,7 @@
     "dataDisk1VhdName": "datadisk",
     "windowsOSVersion": "2012-R2-Datacenter",
     "OSDiskName": "osdisk",
-    "subnetRef": "[resourceId(parameters('existingVNetResourceGroupName'), resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('existingVNetName'),  parameters('subnetName'))]",
+    "subnetRef": "[resourceId(parameters('existingVNetResourceGroupName'), 'Microsoft.Network/virtualNetworks/subnets', parameters('existingVNetName'),  parameters('subnetName'))]",
     "agentGroupName": "[resourceGroup().name]"
   },
   "resources": [
@@ -174,7 +174,7 @@
           },
           "dataDisks": [
             {
-              "name": "[concat(variables('vmName'), 'i',copyIndex(),'_DataDisk1')]",
+              "name": "[concat(variables('vmName'), 'i',copyIndex(),'_DataDisk1')]", 
               "diskSizeGB": "[variables('sizeOfDiskInGB')]",
               "lun": 0,
               "createOption": "Empty"
